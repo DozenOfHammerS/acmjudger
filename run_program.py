@@ -37,6 +37,7 @@ def run(problem_id, submit_id, language, data_count, user_id):  # 判题函数
         program_info['result'] = result_code["Compile Error"]
         return program_info
     if data_count == 0:  # 没有测试数据
+        logging.error("没有测试数据")
         program_info['result'] = result_code["System Error"]
         return program_info
     result = judge_main.judge(

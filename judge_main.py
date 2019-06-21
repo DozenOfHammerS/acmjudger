@@ -26,7 +26,7 @@ def judge(data_count, time_limit, mem_limit, program_info, language):
         if lans[language][0] == 'java' and ret["memoryused"] > mem_limit:
             ret["result"] = result_code["Memory Limit Exceeded"]
         if ret == False:  # 无法打开相应测试数据
-            logging.error("ret = False")
+            logging.error("无法打开相应测试数据")
             get_sample_result(submit_id, i + 1, ret["timeused"], ret["memoryused"], result_code["System Error"])
             continue
         if ret['result'] == result_code["Runtime Error"]:

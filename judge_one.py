@@ -43,9 +43,12 @@ def judge_one_mem_time(submit_id, problem_id, data_num, time_limit, mem_limit, l
         'timelimit': time_limit,  # in MS
         'memorylimit': mem_limit,  # in KB
     }
-    protect.low_level()
-    rst = lorun.run(runcfg)  # 在lorun黑盒中运行程序
-    input_data.close()
-    temp_out_data.close()
-    logging.debug(rst)
-    return rst  # {result:int,timeused:int,memoryused:int}
+    try:
+        protect.low_level()
+        rst = lorun.run(runcfg)  # 在lorun黑盒中运行程序
+        input_data.close()
+        temp_out_data.close()
+        logging.debug(rst)
+        return rst  # {result:int,timeused:int,memoryused:int}
+    except:
+        logging.error("lorun错误")

@@ -42,7 +42,7 @@ def worker():
                 use_total_time = punish_num * punish_num + use_time
                 update_user_contest_problem(contest_id, user_id, problem_id, use_time, is_fac)
                 update_user_contest(contest_id, user_id, use_total_time)
-        if config.auto_clean:  # 清理work目录
+        if config.auto_clean and result['result'] != result_code['System Error']:  # 清理work目录
             deal_data.clean_work_dir(result['submit_id'])  # result的结构见program_info（run_program.py）
         protect.q.task_done()  # 一个任务完成
 

@@ -19,4 +19,5 @@ work_dir = "work_dir"
 #data测试数据目录
 data_dir = "data_dir"
 #自动清理评work目录
-auto_clean = True
+# auto_clean = True
+auto_clean = False
