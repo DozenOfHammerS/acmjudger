@@ -1,7 +1,7 @@
 import db
 import logging
 import datetime
-import protect
+
 # sql = "select count(*) from django_web_submitproblem where user_id = 1 and problem_id = 1 and result_id = 4"
 # res = db.run_sql(sql)
 # print(res[0][0])
@@ -30,10 +30,10 @@ import protect
 # sql = "select punish_time from django_web_contest where contest_id = " + str(contest_id)
 # res = db.run_sql(sql)
 # print(res[0][0])
-user_id = 1
-contest_id = 1
+user_id = 11
+contest_id = 0
 problem_id = 1
-result_code = 4
+result_code = 1
 
 # def get_punish_num(user_id, contest_id, problem_id, result_code):
 #     sql = "select count(*) from django_web_submitproblem where user_id = " + str(user_id) + " and problem_id = " + str(
@@ -117,6 +117,9 @@ result_code = 4
 #     1) + ",is_true = 1 where contest_id = " + str(contest_id) + " and user_id = " + str(
 #     user_id) + " and problem_id = " + str(problem_id)
 # db.run_sql(sql)
-sql = "select submit_id, problem_id, user_id, contest_id, `language` from django_web_submitproblem where result = 0"
-data = db.run_sql(sql)
-print(data)
+
+sql = "select count(*) from django_web_submitproblem where user_id = " + str(user_id) + " and problem_id = " + str(
+        problem_id) + " and result = " + str(result_code) + " and submit_id != " + str(126)
+print(sql)
+res=db.run_sql(sql)
+print(res[0][0] == 0)

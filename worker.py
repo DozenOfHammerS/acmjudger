@@ -27,8 +27,8 @@ def worker():
         update_result(result)  # 将结果写入数据库
         if result['result'] == result_code["Accepted"]:
             add_accept_total(result["problem_id"])  # 增加题目AC数
-        if is_not_accepted(result["user_id"], result["problem_id"], result_code["Accepted"]):
-            add_user_accept_total(result["user_id"])  # 增加用户AC数
+            if is_not_accepted(result["user_id"], result["problem_id"], result_code["Accepted"],submit_id):
+                add_user_accept_total(result["user_id"])  # 增加用户AC数
         if contest_id > 0 and is_not_Accepted_Contest(user_id, contest_id, problem_id,
                                                       result_code["Accepted"]):  # 此题为比赛题且此前未AC
             # 如果这次不是ac 更新punish_num+=1
@@ -81,10 +81,10 @@ def add_accept_total(problem_id):
     protect.dblock.release()
 
 
-def is_not_accepted(user_id, problem_id, result_code):
+def is_not_accepted(user_id, problem_id, result_code,submit_id):
     protect.dblock.acquire()
     sql = "select count(*) from django_web_submitproblem where user_id = " + str(user_id) + " and problem_id = " + str(
-        problem_id) + " and result = " + str(result_code)
+        problem_id) + " and result = " + str(result_code) + " and submit_id != " + str(submit_id)
     res = db.run_sql(sql)
     protect.dblock.release()
     return res[0][0] == 0
@@ -102,7 +102,7 @@ def is_not_Accepted_Contest(user_id, contest_id, problem_id, result_code):
     # sql = "select count(*) from django_web_submitproblem where user_id = " + str(user_id) + " and problem_id = " + str(
     #     problem_id) + " and result_id = " + str(result_code) + " and contest_id = " + str(contest_id)
     sql = "select is_true from django_web_user_contest_problem where contest_id = " + str(
-        contest_id) + " and user_id = " + str(user_id) + "and problem_id = " + str(problem_id)
+        contest_id) + " and user_id = " + str(user_id) + " and problem_id = " + str(problem_id)
     res = db.run_sql(sql)
     protect.dblock.release()
     return res[0][0] == 0

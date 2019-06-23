@@ -82,7 +82,7 @@ def main():
     low_level()
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s --- %(message)s',
-                        # filename='log.txt'
+                        filename='log.txt'
                         )
     DBData.get_lans()
     DBData.get_result_code()
